@@ -1,0 +1,41 @@
+#!/bin/bash
+file=$1
+type=4
+type2=7
+
+echo "installare $file ?"			#aggiungere controllo path
+read flag
+if [ $flag == "y" ] ; then
+	if [[ $file =~ \.sh ]]; then
+		chmod +x $file
+		./$file
+		echo "installato"
+	elif [[ $file =~ \.tgz ]] || [[ $file =~ \.tar.gz ]] || [[ $file =~ \.tar.xz ]]; then
+		echo "Inserire path"
+		read path
+		if [[ $file =~ \.tar.xz ]]; then
+			tar xvf $file -C /home/$path
+		else
+			tar xzvf $file -C /home/$path      #decomprime  in una cartella
+		fi
+		length=${#file}			   		#lunghezza nome file
+		if [[ $file =~ \.tar.gz ]]; then
+			length=$((length-type2))
+		else	
+			length=$((length-type))	   #lunghezza senza tipo
+		fi
+		directory=${file:0:length}         #nome cartella
+		cd /home/$path/$directory
+		 ./configure
+    		make
+   		make test
+    		make install
+	else
+		echo "formato non supportato";
+	fi
+else
+	echo "esco"
+	exit 1
+fi
+echo "uscito"
+exit 1
