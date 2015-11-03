@@ -19,10 +19,11 @@ if [ $flag == "y" ] ; then
 			tar xzvf $file -C /home/$path      #decomprime  in una cartella
 		fi
 		length=${#file}			   		#lunghezza nome file
-		if [[ $file =~ \.tar.gz ]]; then
-			length=$((length-type2))
+		echo "-------------------------------------INSTALLAZIONE-------------------------------------"
+		if [[ $file = \.tgz ]]; then
+			length=$((length-type))
 		else	
-			length=$((length-type))	   #lunghezza senza tipo
+			length=$((length-type2))	   #lunghezza senza tipo
 		fi
 		directory=${file:0:length}         #nome cartella
 		cd /home/$path/$directory
