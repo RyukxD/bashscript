@@ -9,8 +9,6 @@ if [ $flag == "y" ] ; then
 	if [[ $file =~ \.sh ]]; then
 		chmod +x $file
 		./$file
-		echo "installato"
-		exit 0
 	elif [[ $file =~ \.tgz ]] || [[ $file =~ \.tar.gz ]] || [[ $file =~ \.tar.xz ]]; then
 		echo "Inserire path"
 		read path
