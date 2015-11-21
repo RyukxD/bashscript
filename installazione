@@ -10,6 +10,7 @@ if [ $flag == "y" ] ; then
 		chmod +x $file
 		./$file
 		echo "installato"
+		exit 0
 	elif [[ $file =~ \.tgz ]] || [[ $file =~ \.tar.gz ]] || [[ $file =~ \.tar.xz ]]; then
 		echo "Inserire path"
 		read path
@@ -36,7 +37,7 @@ if [ $flag == "y" ] ; then
 	fi
 else
 	echo "esco"
-	exit 1
+	exit 0
 fi
-echo "uscito"
-exit 1
+echo "Installazione riuscita"
+exit 0
