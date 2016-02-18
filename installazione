@@ -1,3 +1,4 @@
+ 
 #!/bin/bash
 file=$1
 type=4
@@ -7,22 +8,24 @@ echo "installare $file ?"			#aggiungere controllo path
 read flag
 if [ $flag == "y" ] ; then
 	if [[ $file =~ \.sh ]]; then
-		chmod +x $file
-		./$file
-	elif [[ $file =~ \.tgz ]] || [[ $file =~ \.tar.gz ]] || [[ $file =~ \.tar.xz ]]; then
-		echo "Inserire path"
+            chmod +x $file
+            ./$file
+	elif [[ $file =~ \.tgz ]] || [[ $file =~ \.tar.gz ]] || [[ $file =~ \.tar.xz ]] || [[ $file =~ \.zip ]]; then
+		echo "Inserire cartella di destinazione"
 		read path
-		if [[ $file =~ \.tar.xz ]]; then
-			tar xvf $file -C /home/$path
+		if [[ $file =~ \.zip ]]; then
+                    unzip $file -d /home/$path
+		elif [[ $file =~ \.tar.xz ]]; then
+                    tar xvf $file -C /home/$path
 		else
-			tar xzvf $file -C /home/$path      #decomprime  in una cartella
+                    tar xzvf $file -C /home/$path      #decomprime  in una cartella
 		fi
 		length=${#file}			   		#lunghezza nome file
 		echo "-------------------------------------INSTALLAZIONE-------------------------------------"
-		if [[ $file = \.tgz ]]; then
-			length=$((length-type))
+		if [[ $file =~ \.tgz ]] || [[ $file =~ \.zip ]]; then
+                    length=$((length-type))
 		else	
-			length=$((length-type2))	   #lunghezza senza tipo
+                    length=$((length-type2))	   #lunghezza senza tipo
 		fi
 		directory=${file:0:length}         #nome cartella
 		cd /home/$path/$directory
@@ -32,6 +35,7 @@ if [ $flag == "y" ] ; then
     		make install
 	else
 		echo "formato non supportato";
+		exit 0
 	fi
 else
 	echo "esco"
